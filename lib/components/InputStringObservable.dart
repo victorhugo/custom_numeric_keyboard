@@ -2,17 +2,15 @@ import 'package:mobx/mobx.dart';
 
 part 'InputStringObservable.g.dart';
 
-class InputStringObservable = _InputStringObservable with _$InputStringObservable;
+class InputStringObservable = _InputStringObservable
+    with _$InputStringObservable;
 
 abstract class _InputStringObservable with Store {
-
-  int  maxLimit = 0;
-    
-  
+  int maxLimit = 0;
 
   bool isEnabled = true;
 
-  _InputStringObservable(int max){
+  _InputStringObservable({int max}) {
     maxLimit = max;
   }
 
@@ -21,26 +19,25 @@ abstract class _InputStringObservable with Store {
 
   @action
   void add(String digit) {
-    if(!isEnabled) return;
-    if(value.length < maxLimit){
-        value += digit;
+    if (!isEnabled) return;
+    if (value.length < maxLimit) {
+      value += digit;
     }
   }
 
   @action
-  void del(){
-    if(!isEnabled) return;
-     if(value.length > 0){
+  void del() {
+    if (!isEnabled) return;
+    if (value.length > 0) {
       value = value.substring(0, value.length - 1);
     }
   }
 
-  bool isEmpty(){
+  bool isEmpty() {
     return value.length == 0;
   }
 
-  bool isCompleted(){
+  bool isCompleted() {
     return value.length == maxLimit;
   }
-
 }

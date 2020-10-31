@@ -6,15 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class NumericKeyboard extends StatefulWidget {
-  NumericKeyboard({Key key}) : super(key: key);
+  NumericKeyboard(
+      {Key key,
+      @required this.currentInput,
+      this.buttonStyle,
+      this.tintColor = Colors.black,
+      this.withFloat = false})
+      : super(key: key);
+
+  final TextSelector currentInput;
+  final TextStyle buttonStyle;
+  final Color tintColor;
+  final bool withFloat;
 
   @override
   _NumericKeyboardState createState() => _NumericKeyboardState();
 }
 
 class _NumericKeyboardState extends State<NumericKeyboard> {
-  TextSelector currentInput;
-  TextSelector input1;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +51,18 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
 
   List<Widget> buttonSForKeyboard() {
     var list = <Widget>[
-      nButton(1, currentInput),
-      nButton(2, currentInput),
-      nButton(3, currentInput),
-      nButton(4, currentInput),
-      nButton(5, currentInput),
-      nButton(6, currentInput),
-      nButton(7, currentInput),
-      nButton(8, currentInput),
-      nButton(9, currentInput),
-      Container(),
-      nButton(0, currentInput),
-      // delButton(),
+      nButton(1, widget.currentInput),
+      nButton(2, widget.currentInput),
+      nButton(3, widget.currentInput),
+      nButton(4, widget.currentInput),
+      nButton(5, widget.currentInput),
+      nButton(6, widget.currentInput),
+      nButton(7, widget.currentInput),
+      nButton(8, widget.currentInput),
+      nButton(9, widget.currentInput),
+      widget.withFloat ? textButton(".", widget.currentInput) : Container(),
+      nButton(0, widget.currentInput),
+      delButton(),
     ];
     return list;
   }
@@ -59,10 +72,12 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
       child: FlatButton(
         child: Center(
           child: Text("$index",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 30)),
+              style: widget.buttonStyle != null
+                  ? widget.buttonStyle
+                  : TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30)),
         ),
         onPressed: () {
           setState(() {
@@ -75,6 +90,42 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
       ),
     );
   }
+
+  Widget textButton(String symbol, TextSelector text) {
+    return Center(
+      child: FlatButton(
+        child: Center(
+          child: Text("$symbol",
+              style: widget.buttonStyle != null
+                  ? widget.buttonStyle
+                  : TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30)),
+        ),
+        onPressed: () {
+          setState(() {
+            if (text != null) {
+              text.input.add("$symbol");
+            }
+          });
+          print("Presionado $symbol");
+        },
+      ),
+    );
+  }
+
+  Widget delButton() {
+    return FlatButton(
+      child: Icon(
+        Icons.arrow_back_ios,
+        color: widget.tintColor,
+      ),
+      onPressed: () {
+        widget.currentInput.input.del();
+      },
+    );
+  }
 }
 
 typedef TapSelectorCallback = void Function(Key key);
@@ -84,12 +135,14 @@ class TextSelector extends StatefulWidget {
       {Key key,
       @required this.input,
       @required this.onTap,
-      @required this.selected})
+      @required this.selected,
+      this.style})
       : super(key: key);
 
   final InputStringObservable input;
   final TapSelectorCallback onTap;
   final SelectedInputObservable selected;
+  final TextStyle style;
 
   @override
   _TextSelectorState createState() => _TextSelectorState();
@@ -111,9 +164,7 @@ class _TextSelectorState extends State<TextSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      child: GestureDetector(
+    return GestureDetector(
         onTap: () {
           this.widget.onTap(this.widget.key);
           // setState(() {
@@ -121,36 +172,8 @@ class _TextSelectorState extends State<TextSelector> {
           // });
         },
         child: Observer(
-          builder: (context) {
-            return Row(
-              children: [
-                SizedBox(width: 10),
-                Expanded(
-                    flex: 8,
-                    child: Observer(
-                        builder: (context) => Text(
-                              widget.input.value,
-                              //style: R.fontStyleRegular(size: 20)
-                            ))
-                    // TextFormField(
-                    //   obscureText: true,
-                    //   onEditingComplete: () => FocusScope.of(context).nextFocus(), //Ayuda a saltar al siguiente
-                    //     // controller: _emailTextController,
-                    //     // validator: _validateEmail,
-                    //     keyboardType: TextInputType.emailAddress,
-                    //     decoration: InputDecoration(
-                    //     border: InputBorder.none,
-                    //         //labelText: "Usuario",
-                    //         hintText: label,
-                    //         // labelStyle: GoogleFonts.notoSans(fontWeight: FontWeight.w400, fontSize: 15)
-                    //         )
-                    //   ),
-                    ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
+            builder: (context) => Text(widget.input.value, style: widget.style
+                //style: R.fontStyleRegular(size: 20)
+                )));
   }
 }
