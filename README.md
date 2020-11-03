@@ -1,8 +1,10 @@
 # custom_numeric_keyboard
 
-A new Flutter package project.
+A better customizable numeric keyboard for Flutter.
 
 ## Getting Started
+
+Documentation work in progress...
 
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),
