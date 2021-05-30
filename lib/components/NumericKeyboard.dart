@@ -69,7 +69,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
 
   Widget nButton(int index, TextSelector text) {
     return Center(
-      child: FlatButton(
+      child: TextButton(
         child: Center(
           child: Text("$index",
               style: widget.buttonStyle != null
@@ -93,7 +93,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
 
   Widget textButton(String symbol, TextSelector text) {
     return Center(
-      child: FlatButton(
+      child: TextButton(
         child: Center(
           child: Text("$symbol",
               style: widget.buttonStyle != null
@@ -116,7 +116,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
   }
 
   Widget delButton() {
-    return FlatButton(
+    return TextButton(
       child: Icon(
         Icons.backspace_outlined,
         color: widget.tintColor,
