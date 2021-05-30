@@ -5,8 +5,7 @@ abstract class DigitValidor {
 class IntegerValidator extends DigitValidor {
   @override
   bool isValid(String newValue) {
-    if (newValue == null) return false;
-    final value = int.parse(newValue);
+    final value = int.tryParse(newValue);
     if (value == null) return false;
     if (value < 0) return false;
 

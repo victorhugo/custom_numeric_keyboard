@@ -7,15 +7,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class NumericKeyboard extends StatefulWidget {
   NumericKeyboard(
-      {Key key,
-      @required this.currentInput,
+      {Key? key,
+      required this.currentInput,
       this.buttonStyle,
       this.tintColor = Colors.black,
       this.withFloat = false})
       : super(key: key);
 
   final TextSelector currentInput;
-  final TextStyle buttonStyle;
+  final TextStyle? buttonStyle;
   final Color tintColor;
   final bool withFloat;
 
@@ -81,9 +81,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
         ),
         onPressed: () {
           setState(() {
-            if (text != null) {
-              text.input.add("$index");
-            }
+            text.input.add("$index");
           });
           print("Presionado $index");
         },
@@ -105,9 +103,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
         ),
         onPressed: () {
           setState(() {
-            if (text != null) {
-              text.input.add("$symbol");
-            }
+            text.input.add("$symbol");
           });
           print("Presionado $symbol");
         },
@@ -128,21 +124,21 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
   }
 }
 
-typedef TapSelectorCallback = void Function(Key key);
+typedef TapSelectorCallback = void Function(Key? key);
 
 class TextSelector extends StatefulWidget {
   const TextSelector(
-      {Key key,
-      @required this.input,
-      @required this.onTap,
-      @required this.selected,
+      {Key? key,
+      required this.input,
+      required this.onTap,
+      required this.selected,
       this.style})
       : super(key: key);
 
   final InputStringObservable input;
   final TapSelectorCallback onTap;
   final SelectedInputObservable selected;
-  final TextStyle style;
+  final TextStyle? style;
 
   @override
   _TextSelectorState createState() => _TextSelectorState();

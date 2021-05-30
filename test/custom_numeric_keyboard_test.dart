@@ -1,4 +1,6 @@
+import 'package:custom_numeric_keyboard/components/InputStringObservable.dart';
 import 'package:custom_numeric_keyboard/components/NumericKeyboard.dart';
+import 'package:custom_numeric_keyboard/components/SelectedInput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10,14 +12,19 @@ void main() {
     expect(calculator.addOne(2), 3);
     expect(calculator.addOne(-7), -6);
     expect(calculator.addOne(0), 1);
-    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
   });
 
   testWidgets(
       "Cars are displayed with summary details, and selected car is highlighted blue.",
       (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: NumericKeyboard(),
+      home: NumericKeyboard(
+        currentInput: TextSelector(
+          input: InputStringObservable(),
+          onTap: (key) {},
+          selected: SelectedInputObservable(GlobalKey()),
+        ),
+      ),
     ));
   });
 }

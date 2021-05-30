@@ -8,7 +8,7 @@ class SelectedInputObservable = _SelectedInputObservable with _$SelectedInputObs
 abstract class _SelectedInputObservable with Store {
 
   @observable
-  Key currentKey;  
+  Key? currentKey;  
 
   _SelectedInputObservable(Key selector){
     currentKey = selector;

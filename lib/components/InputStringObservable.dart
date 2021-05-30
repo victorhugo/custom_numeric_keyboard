@@ -6,11 +6,11 @@ class InputStringObservable = _InputStringObservable
     with _$InputStringObservable;
 
 abstract class _InputStringObservable with Store {
-  int maxLimit = 0;
+  int? maxLimit = 0;
 
   bool isEnabled = true;
 
-  _InputStringObservable({int max, String placeholder = ""}) {
+  _InputStringObservable({int? max, String placeholder = ""}) {
     maxLimit = max;
     value = placeholder;
   }
@@ -21,7 +21,7 @@ abstract class _InputStringObservable with Store {
   @action
   void add(String digit) {
     if (!isEnabled) return;
-    if (value.length < maxLimit) {
+    if (value.length < maxLimit!) {
       var numValue = double.parse(value);
       if (numValue == 0) {
         value = digit;

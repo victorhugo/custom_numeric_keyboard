@@ -12,13 +12,13 @@ mixin _$SelectedInputObservable on _SelectedInputObservable, Store {
   final _$currentKeyAtom = Atom(name: '_SelectedInputObservable.currentKey');
 
   @override
-  Key get currentKey {
+  Key? get currentKey {
     _$currentKeyAtom.reportRead();
     return super.currentKey;
   }
 
   @override
-  set currentKey(Key value) {
+  set currentKey(Key? value) {
     _$currentKeyAtom.reportWrite(value, super.currentKey, () {
       super.currentKey = value;
     });
