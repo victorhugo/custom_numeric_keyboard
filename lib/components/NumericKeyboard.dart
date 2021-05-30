@@ -118,7 +118,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
   Widget delButton() {
     return FlatButton(
       child: Icon(
-        Icons.arrow_back_ios,
+        Icons.backspace_outlined,
         color: widget.tintColor,
       ),
       onPressed: () {

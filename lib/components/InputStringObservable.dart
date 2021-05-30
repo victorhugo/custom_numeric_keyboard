@@ -10,8 +10,9 @@ abstract class _InputStringObservable with Store {
 
   bool isEnabled = true;
 
-  _InputStringObservable({int max}) {
+  _InputStringObservable({int max, String placeholder = ""}) {
     maxLimit = max;
+    value = placeholder;
   }
 
   @observable
@@ -21,8 +22,18 @@ abstract class _InputStringObservable with Store {
   void add(String digit) {
     if (!isEnabled) return;
     if (value.length < maxLimit) {
-      value += digit;
+      var numValue = double.parse(value);
+      if (numValue == 0) {
+        value = digit;
+      } else {
+        value += digit;
+      }
     }
+  }
+
+  @action
+  void setValue(String defValue) {
+    value = defValue;
   }
 
   @action
@@ -30,6 +41,9 @@ abstract class _InputStringObservable with Store {
     if (!isEnabled) return;
     if (value.length > 0) {
       value = value.substring(0, value.length - 1);
+      if (value.length == 0) {
+        value = "0";
+      }
     }
   }
 

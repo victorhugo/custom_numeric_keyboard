@@ -39,6 +39,17 @@ mixin _$InputStringObservable on _InputStringObservable, Store {
   }
 
   @override
+  void setValue(String defValue) {
+    final _$actionInfo = _$_InputStringObservableActionController.startAction(
+        name: '_InputStringObservable.setValue');
+    try {
+      return super.setValue(defValue);
+    } finally {
+      _$_InputStringObservableActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void del() {
     final _$actionInfo = _$_InputStringObservableActionController.startAction(
         name: '_InputStringObservable.del');
